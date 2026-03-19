@@ -44,7 +44,7 @@ def sheet_csv_url() -> str:
 def load_index() -> pd.DataFrame:
     resp = requests.get(sheet_csv_url(), timeout=30)
     resp.raise_for_status()
-    df = pd.read_csv(StringIO(resp.text), dtype=str).fillna('')
+    resp.encoding = 'utf-8' df = pd.read_csv(StringIO(resp.text), dtype=str).fillna('')
     required = ['Name', 'Folder_ID', 'Parent_ID', 'Level', 'Path', 'Top_Section', 'Company', 'Is_Leaf', 'Link']
     for col in required:
         if col not in df.columns:
